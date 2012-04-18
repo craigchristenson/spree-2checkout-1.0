@@ -11,9 +11,14 @@
       <%= hidden_field_tag :street_address, @order.bill_address.address1 %>
       <%= hidden_field_tag :street_address2, @order.bill_address.address2 %>
       <%= hidden_field_tag :city, @order.bill_address.city %>
+      <% if (@order.bill_address.country.name != "United States" && @order.bill_address.country.name != "Canada") %>
+            <%= hidden_field_tag :state, "XX" %>
+      <% else %>
       <%= hidden_field_tag :state, @order.bill_address.state %>
+      <% end %>
       <%= hidden_field_tag :country, @order.bill_address.country.name %>
       <%= hidden_field_tag :zip, @order.bill_address.zipcode %>
+      <% if (defined?(@order.ship_address.address1)) %>
       <%= hidden_field_tag :ship_name, @order.ship_address.firstname + " " + @order.ship_address.lastname %>
       <%= hidden_field_tag :ship_street_address, @order.ship_address.address1 %>
       <%= hidden_field_tag :ship_street_address2, @order.ship_address.address2 %>
@@ -21,6 +26,7 @@
       <%= hidden_field_tag :ship_state, @order.ship_address.state %>
       <%= hidden_field_tag :ship_zip, @order.ship_address.zipcode %>
       <%= hidden_field_tag :ship_country, @order.ship_address.country.name %>
+      <% end %>
       <% if pm.preferred(:test_mode) == true %>
         <%= hidden_field_tag :demo, "Y" %>
       <% end %>
@@ -41,6 +47,6 @@
         <input type="submit" name="send_form" value="Submit">
     </form>
 
-<script type="text/javascript">
-    $('#paymentForm').submit();
-</script>
+ <script type="text/javascript">
+     $('#paymentForm').submit();
+ </script>

@@ -29,6 +29,7 @@ module Spree
      payment_method = PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id])
      if payment_method.kind_of?(BillingIntegration::TwoCheckout)
        load_order
+       @order.payments.create(:amount => @order.total, :payment_method => payment_method)
        redirect_to(two_checkout_payment_order_checkout_url(@order, :payment_method_id => payment_method))
      end
     end
